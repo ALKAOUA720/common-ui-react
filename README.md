@@ -22,4 +22,3 @@ npm run build
 - 通用组件放 `components` 文件夹目录下
 - 首页以瀑布流布局的方式展示组件，目录路径是：`src/pages/index.tsx`
 - Guide 组件展示组件的使用示例，目录路径是：`src/pages/index.tsx`
-
