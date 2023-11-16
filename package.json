@@ -1,15 +1,14 @@
 {
   "private": true,
   "author": "ALKAOUA720 <65393954+ALKAOUA720@users.noreply.github.com>",
-  "homepage": "https://ALKAOUA720.github.io/common-ui-react",
   "scripts": {
-    "dev": "cross-env PORT=2580 umi dev",
     "build": "cross-env umi build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "dev": "cross-env PORT=2580 umi dev",
     "postinstall": "umi setup",
     "setup": "umi setup",
-    "start": "npm run dev",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "start": "npm run dev"
   },
   "dependencies": {
     "callapp-lib": "^3.5.3",
@@ -19,7 +18,6 @@
   "devDependencies": {
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
-    "gh-pages": "^6.0.0",
     "typescript": "^5.0.3"
   }
 }
