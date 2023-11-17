@@ -5,6 +5,10 @@ export interface listType {
 
 export const componentsList: listType[] = [
   {
+    component: 'List',
+    name: '列表'
+  },
+  {
     component: 'Popover',
     name: '气泡卡片',
   },

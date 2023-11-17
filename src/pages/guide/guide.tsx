@@ -4,11 +4,14 @@ import uploadIcon from "@/assets/upload.png";
 import Toast from '@/components/toast/toast';
 import Message from '@/components/message/message';
 import Modal from '@/components/modal/modal';
-import { classNames } from '@/utils/util';
+import { classNames, getHeroInfoList } from '@/utils/util';
 import longText from '@/config/longText';
+import HeroInfo from './hero-info/hero-info';
 import customTitleIcon from '@/assets/custom-title.png';
 import Drawer from '@/components/drawer/drawer';
 import Popover from '@/components/popover/popover';
+import List from '@/components/list/list';
+import { HeroInfoT } from '@/types/types';
 
 const Guide: React.FC<{
   componentTitle: string;
@@ -31,6 +34,47 @@ const Guide: React.FC<{
 }
 export default Guide;
 
+const ListGuide: React.FC<{}> = () => {
+  const [heroInfoList, setHeroInfoList] = useState<HeroInfoT[]>([]); // 英雄信息列表
+  const [isInitLoading, setIsInitLoading] = useState(true); // 是否正在加载第一个列表
+  const [hasMore, setHasMore] = useState(true); // 是否还有更多
+  let isMoreLoading = false; // 是否正在加载更多
+  let startIndex = 0; // 当前请求列表的起始索引
+  useEffect(() => {
+    getMoreHeroInfo();
+  }, []);
+  const getMoreHeroInfo = async function () {
+    // console.log(startIndex);
+    isMoreLoading = true;
+    const list = await getHeroInfoList(startIndex, 10);
+    if (list.length === 0) {
+      setHasMore(false); // 不再有新数据
+      return;
+    }
+    setHeroInfoList(e => e.concat(list));
+    startIndex += 10;
+    isMoreLoading = false;
+    if (isInitLoading) {
+      setIsInitLoading(false);
+    }
+  }
+  return (
+    <>
+      <List
+        isInitLoading={isInitLoading}
+        isMoreLoading={isMoreLoading}
+        hasMore={hasMore}
+        onNearBottom={() => { getMoreHeroInfo() }}
+      >
+        {heroInfoList.map((item, index) => (
+          <List.Item key={index}>
+            <HeroInfo info={item} />
+          </List.Item>
+        ))}
+      </List>
+    </>
+  )
+}
 
 const ToastGuide: React.FC<{}> = () => {
   return (
@@ -634,6 +678,7 @@ const PopoverGuide: React.FC<{}> = () => {
 };
 
 const map: { [key: string]: ReactNode } = {
+  List: <ListGuide />,
   Toast: <ToastGuide />,
   Message: <MessageGuide />,
   Modal: <ModalGuide />,

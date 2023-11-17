@@ -1,3 +1,6 @@
+import { HeroInfoT } from "@/types/types";
+import { heroInfoList } from "@/config/heroIdList";
+
 /** 判断客户端 */
 export function judgeClient() {
   const browser = {
@@ -103,4 +106,38 @@ export function getParamsByUrl(url: string): {
     protocol: s1,
     path: s2,
   };
+}
+
+/** 
+ * 节流函数
+ * @param fn 节流执行的函数
+ * @param delay 时间间隔，单位ms
+ */
+export const throttle = function (fn: () => void, delay: number) {
+  let flag = true
+  return function () {
+    if (!flag) {
+      //休息时间 暂不接客
+      return false
+    }
+    // 工作时间，执行函数并且在间隔期内把状态位设为无效
+    flag = false
+    setTimeout(() => {
+      fn()
+      flag = true;
+    }, delay)
+  }
+}
+
+/** 模拟网络请求，获取英雄信息列表 */
+export const getHeroInfoList = function (intial: number, length?: number): Promise<HeroInfoT[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (length) {
+        resolve(heroInfoList.slice(intial, intial + length));
+      } else {
+        resolve(heroInfoList.slice(intial));
+      }
+    }, 500);
+  })
 }

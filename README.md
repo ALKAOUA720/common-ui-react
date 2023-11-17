@@ -1,22 +1,26 @@
-# 安装
+## 访问
+
+https://alkaoua720.github.io/
+
+## 安装
 
 ```
 npm install
 ```
 
-# 运行
+## 运行
 
 ```
 npm run dev
 ```
 
-# 构建
+## 构建
 
 ```
 npm run build
 ```
 
-# 注意事项
+## 注意事项
 
 - 通用组件中 `less` 不允许重名
 - 通用组件放 `components` 文件夹目录下
