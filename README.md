@@ -2,6 +2,9 @@
 
 https://alkaoua720.github.io/common-ui-react/
 
+![image](https://github.com/ALKAOUA720/common-ui-react/assets/65393954/62556f79-80a8-4a44-a5fb-2e18c8b3935d)
+
+
 ## 安装
 
 ```
