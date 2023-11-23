@@ -1,6 +1,6 @@
 ## 访问
 
-[https://alkaoua720.github.io/](https://alkaoua720.github.io/common-ui-react/)
+https://alkaoua720.github.io/common-ui-react/
 
 ## 安装
 
