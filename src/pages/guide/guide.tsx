@@ -36,16 +36,20 @@ export default Guide;
 
 const ListGuide: React.FC<{}> = () => {
   const [heroInfoList, setHeroInfoList] = useState<HeroInfoT[]>([]); // 英雄信息列表
-  const [isInitLoading, setIsInitLoading] = useState(true); // 是否正在加载第一个列表
   const [hasMore, setHasMore] = useState(true); // 是否还有更多
-  let isMoreLoading = false; // 是否正在加载更多
   let startIndex = 0; // 当前请求列表的起始索引
   useEffect(() => {
-    getMoreHeroInfo();
+    addDataToHeroInfoList();
   }, []);
-  const getMoreHeroInfo = async function () {
-    // console.log(startIndex);
-    isMoreLoading = true;
+  /** 初始化或重新刷新列表 */
+  const initHeroInfoList = function () {
+    setHasMore(true);
+    setHeroInfoList([]);
+    startIndex = 0;
+    addDataToHeroInfoList();
+  }
+  /** 加载更多数据 */
+  const addDataToHeroInfoList = async function () {
     const list = await getHeroInfoList(startIndex, 10);
     if (list.length === 0) {
       setHasMore(false); // 不再有新数据
@@ -53,18 +57,13 @@ const ListGuide: React.FC<{}> = () => {
     }
     setHeroInfoList(e => e.concat(list));
     startIndex += 10;
-    isMoreLoading = false;
-    if (isInitLoading) {
-      setIsInitLoading(false);
-    }
   }
   return (
     <>
       <List
-        isInitLoading={isInitLoading}
-        isMoreLoading={isMoreLoading}
         hasMore={hasMore}
-        onNearBottom={() => { getMoreHeroInfo() }}
+        onNearBottom={() => { addDataToHeroInfoList() }}
+        onHeaderReleased={() => { initHeroInfoList() }}
       >
         {heroInfoList.map((item, index) => (
           <List.Item key={index}>

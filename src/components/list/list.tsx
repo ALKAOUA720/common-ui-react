@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { classNames, judgeClient, mergeOptions, throttle } from '@/utils/util';
+import { classNames, mergeOptions, throttle } from '@/utils/util';
 import './list.less'
 import loadingMoreIcon from "@/assets/loading.gif";
 
@@ -7,21 +7,23 @@ import loadingMoreIcon from "@/assets/loading.gif";
  */
 
 type ListPropsT = {
-  isInitLoading?: boolean;
-  isMoreLoading?: boolean;
+  /** 是否还有更多数据 */
   hasMore?: boolean;
+  /** 放 List.Item */
   children?: React.ReactNode;
+  /** 滚动条触顶事件 */
+  onHeaderReleased?: () => void;
+  /** 滚动条即将触底事件 */
   onNearBottom?: () => void;
 };
 
 type ListItemPropsT = {
+  /** 列表内容组件 */
   children?: React.ReactNode;
 };
 
 /** 默认配置 */
 const defaultProps = {
-  isInitLoading: true,
-  isMoreLoading: false,
   hasMore: true,
 }
 
@@ -45,7 +47,6 @@ const List: React.FC<ListPropsT> & {
     }
   }, [overflowBoxRef]);
   useEffect(() => {
-    console.log(overflowBoxDom);
     if (overflowBoxDom) {
       overflowBoxDom.onscroll = throttle(() => {
         // 为了避免连续触发 scroll 事件导致的性能问题，我们可以设定一个 "scrollThreshold" 值，单位像素
@@ -54,6 +55,13 @@ const List: React.FC<ListPropsT> & {
         const scrollTop = overflowBoxDom.scrollTop;
         const clientHeight = overflowBoxDom.clientHeight;
         const isNeerBottom = scrollHeight - scrollTop - clientHeight <= scrollThreshold;
+        if (scrollTop <= -50) {
+          // if (scrollTop === 0) {
+          console.log('触顶啦');
+          if (options.onHeaderReleased) {
+            options.onHeaderReleased();
+          }
+        }
         if (isNeerBottom) {
           console.log('触底啦');
           if (options.onNearBottom) {
@@ -85,10 +93,7 @@ const List: React.FC<ListPropsT> & {
 
 const ListItem: React.FC<ListItemPropsT> = (props) => {
   return (
-    <div
-      className={classNames('list-item')}
-      onClick={() => { }}
-    >
+    <div className={classNames('list-item')}>
       {props.children}
     </div>
   )
