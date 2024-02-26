@@ -5,6 +5,7 @@ import { judgeClient } from '@/utils/util';
 import Guide from '../guide/guide';
 import { componentsList } from '@/config/config';
 import { useLocation } from 'umi';
+import GithubIcon from '@/assets/github.png';
 
 
 /** 主页 */
@@ -26,9 +27,15 @@ const Index: React.FC<{}> = (props) => {
     setScreenWidth(screen.availWidth);
   }
   window.addEventListener("resize", resizeThrottler, false);
+  const gotoGithub = () => {
+    window.open("https://github.com/ALKAOUA720/common-ui-react");
+  }
   return (
     <div className={css.index}>
-      {/* <div className={css['index-h1']}>Common UI</div> */}
+      <div className={css['top-box']}>
+        <div className={css['index-h1']}>Common UI</div>
+        <img className={css['github-enter']} src={GithubIcon} onClick={gotoGithub}></img>
+      </div>
       <div className={css['index-content']}>
         {screenWidth < 800 ? (
           // 单列布局，适用于移动端
