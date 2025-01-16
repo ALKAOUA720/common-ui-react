@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import { createRoot } from 'react-dom/client';
-import successIcon from "@/assets/success.png";
 import failIcon from "@/assets/fail.png";
-import { classNames, mergeOptions } from '@/utils/util';
-import LoadingIcon from '../loading-icon/loading-icon';
+import successIcon from "@/assets/success.png";
+import { classNames, mergeOptions } from "@/utils/util";
+import React, { useEffect, useMemo } from "react";
+import { createRoot } from "react-dom/client";
+import LoadingIcon from "../loading-icon/loading-icon";
 
 type ToastOptionsT = {
   /** Toast 文本内容 */
@@ -13,7 +13,7 @@ type ToastOptionsT = {
   /** Toast 图标 */
   icon?: React.ReactNode;
   /** 图标和文字布局，仅在参数 icon 合法时有效 */
-  direction?: 'row' | 'column';
+  direction?: "row" | "column";
   /** 是否允许背景点击，默认为 true */
   maskClickable?: boolean;
   /** 遮罩类名，不会覆盖组件原本样式，加 !important 可覆盖 */
@@ -32,8 +32,8 @@ type ToastOptionsT = {
 const defaultOptions = {
   duration: 2000,
   maskClickable: true,
-  direction: 'column',
-}
+  direction: "column",
+};
 
 /** 全局配置 */
 const configOptions = {};
@@ -42,16 +42,10 @@ const configOptions = {};
 const animationTime = 300;
 
 /** 淡入动画效果 */
-const appearAnimation = [
-  { opacity: 0 },
-  { opacity: 1 }
-];
+const appearAnimation = [{ opacity: 0 }, { opacity: 1 }];
 
 /** 淡出动画效果 */
-const disappearAnimation = [
-  { opacity: 1 },
-  { opacity: 0 }
-];
+const disappearAnimation = [{ opacity: 1 }, { opacity: 0 }];
 
 /** 内部 Toast 组件 */
 const InternalToast: React.FC<ToastOptionsT> = (props) => {
@@ -63,47 +57,46 @@ const InternalToast: React.FC<ToastOptionsT> = (props) => {
     }
   }, []);
   const ShowIcon = useMemo(() => {
-    if (!props.icon || ['number', 'boolean'].includes(typeof props.icon)) {
+    if (!props.icon || ["number", "boolean"].includes(typeof props.icon)) {
       return null;
     }
     switch (props.icon) {
-      case 'success':
-        return <img className={'toast-icon'} src={successIcon} />;
-      case 'fail':
-        return <img className={'toast-icon'} src={failIcon} />;
-      case 'loading':
-        return <LoadingIcon className={'toast-icon'} />;
+      case "success":
+        return <img className={"toast-icon"} src={successIcon} />;
+      case "fail":
+        return <img className={"toast-icon"} src={failIcon} />;
+      case "loading":
+        return <LoadingIcon className={"toast-icon"} />;
       default:
-        return typeof props.icon === 'string' ? null : <>{props.icon}</>;
+        return typeof props.icon === "string" ? null : <>{props.icon}</>;
     }
   }, [props]);
   return (
     <div
-      className={classNames('toast-mask', props.maskClassName)}
+      className={classNames("toast-mask", props.maskClassName)}
       style={{
-        pointerEvents: props.maskClickable ? 'none' : 'auto',
+        pointerEvents: props.maskClickable ? "none" : "auto",
         ...props.maskStyle,
       }}
     >
       <div
         className={classNames(
-          'toast',
-          ShowIcon ?
-            props.direction === 'column' ? 'toast-with-icon-column' : 'toast-with-icon-row'
-            :
-            '',
-          props.bodyClassName,
+          "toast",
+          ShowIcon
+            ? props.direction === "column"
+              ? "toast-with-icon-column"
+              : "toast-with-icon-row"
+            : "",
+          props.bodyClassName
         )}
         style={{
           flexDirection: props.direction,
           ...props.bodyStyle,
         }}
       >
-        {ShowIcon && (
-          <div className={'toast-icon-box'}>{ShowIcon}</div>
-        )}
-        {typeof props.content === 'string' ? (
-          <div className={'toast-text'}>{props.content}</div>
+        {ShowIcon && <div className={"toast-icon-box"}>{ShowIcon}</div>}
+        {typeof props.content === "string" ? (
+          <div className={"toast-text"}>{props.content}</div>
         ) : (
           props.content
         )}
@@ -112,7 +105,7 @@ const InternalToast: React.FC<ToastOptionsT> = (props) => {
   );
 };
 
-/** 
+/**
  * options 配置项说明
  * |  属性  |  类型  |  说明  |  默认值  |
  * | :----: | :----: | :----: | :----: |
@@ -129,10 +122,10 @@ const InternalToast: React.FC<ToastOptionsT> = (props) => {
  */
 const show = (options: string | ToastOptionsT) => {
   let ops = options as ToastOptionsT;
-  if (typeof options === 'string') {
+  if (typeof options === "string") {
     ops = {
       content: options,
-    }
+    };
   }
   ops = mergeOptions(defaultOptions, configOptions, ops);
   const close = renderToastInBody(
@@ -151,12 +144,17 @@ const show = (options: string | ToastOptionsT) => {
 /** 关闭当前显示中的 Toast */
 const clear = () => {
   removeToastInBody();
-}
+};
 
 /** 全局配置 */
-const config = (options: Pick<ToastOptionsT, 'duration' | 'icon' | 'maskClickable' | 'onClose'>) => {
+const config = (
+  options: Pick<
+    ToastOptionsT,
+    "duration" | "icon" | "maskClickable" | "onClose"
+  >
+) => {
   Object.assign(configOptions, options);
-}
+};
 
 /** Toast 轻提示，只支持指令式调用 */
 const Toast: {
@@ -167,12 +165,11 @@ const Toast: {
 
 export default Toast;
 
-
 /** 渲染一个 Toast 组件到 body 下面 */
 const renderToastInBody = function (component: JSX.Element) {
-  const nextToastDiv = document.createElement('div');
-  nextToastDiv.id = 'toast-body';
-  const presentToastDiv = document.getElementById('toast-body');
+  const nextToastDiv = document.createElement("div");
+  nextToastDiv.id = "toast-body";
+  const presentToastDiv = document.getElementById("toast-body");
   if (presentToastDiv && document.body.contains(presentToastDiv)) {
     document.body.replaceChild(nextToastDiv, presentToastDiv);
   } else {
@@ -182,20 +179,23 @@ const renderToastInBody = function (component: JSX.Element) {
   const root = createRoot(nextToastDiv);
   root.render(component);
   return () => {
-    nextToastDiv.animate(disappearAnimation, animationTime).onfinish = function () {
-      root.unmount();
-      // 容错处理
-      if (document.body.contains(nextToastDiv)) document.body.removeChild(nextToastDiv);
-    };
+    nextToastDiv.animate(disappearAnimation, animationTime).onfinish =
+      function () {
+        root.unmount();
+        // 容错处理
+        if (document.body.contains(nextToastDiv))
+          document.body.removeChild(nextToastDiv);
+      };
   };
-}
+};
 
 /** 移除当前的 Toast 组件 */
 const removeToastInBody = function () {
-  const presentToastDiv = document.getElementById('toast-body');
+  const presentToastDiv = document.getElementById("toast-body");
   if (presentToastDiv && document.body.contains(presentToastDiv)) {
-    presentToastDiv.animate(disappearAnimation, animationTime).onfinish = function () {
-      document.body.removeChild(presentToastDiv);
-    };
+    presentToastDiv.animate(disappearAnimation, animationTime).onfinish =
+      function () {
+        document.body.removeChild(presentToastDiv);
+      };
   }
-}
+};

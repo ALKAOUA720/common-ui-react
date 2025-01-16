@@ -33,7 +33,7 @@ const Index: React.FC<{}> = (props) => {
   return (
     <div className={css.index}>
       <div className={css['top-box']}>
-        <div className={css['index-h1']}>Common UI</div>
+        <div className={css['index-h1']}>Common UI - React</div>
         <img className={css['github-enter']} src={GithubIcon} onClick={gotoGithub}></img>
       </div>
       <div className={css['index-content']}>

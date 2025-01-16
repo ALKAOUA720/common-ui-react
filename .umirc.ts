@@ -7,17 +7,17 @@ export default defineConfig({
       component: "@/pages/index/index.tsx",
       routes: [
         {
-          path: '/',
+          path: "/",
           component: "@/pages/index/index.tsx",
-          title: 'common-ui',
+          title: "common-ui",
         },
-      ]
+      ],
     },
   ],
   history: {
-    type: 'hash',
+    type: "hash",
   },
-  npmClient: 'pnpm',
-  title: 'Common UI',
-  publicPath: process.env.NODE_ENV !== 'production' ? '/' : './',
+  npmClient: "pnpm",
+  title: "Common UI - React",
+  publicPath: process.env.NODE_ENV !== "production" ? "/" : "./",
 });

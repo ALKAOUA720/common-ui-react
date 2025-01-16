@@ -1,6 +1,6 @@
 {
   "private": true,
-  "author": "ALKAOUA720 <65393954+ALKAOUA720@users.noreply.github.com>",
+  "author": "ALKAOUA720 <929350256@qq.com>",
   "scripts": {
     "build": "cross-env umi build",
     "dev": "cross-env PORT=2580 umi dev",
