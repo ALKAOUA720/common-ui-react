@@ -19,9 +19,6 @@ const Guide: React.FC<{
 }> = ({ componentTitle, componentName }) => {
   const ref = useRef(null);
   useEffect(() => {}, []);
-  if (!location) {
-    return null;
-  }
   return (
     <div className={css.block} ref={ref}>
       <div className={css.title}>

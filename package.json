@@ -2,8 +2,8 @@
   "private": true,
   "author": "ALKAOUA720 <929350256@qq.com>",
   "scripts": {
+    "dev": "cross-env PORT=12580 umi dev",
     "build": "cross-env umi build",
-    "dev": "cross-env PORT=2580 umi dev",
     "postinstall": "umi setup",
     "setup": "umi setup",
     "start": "npm run dev"

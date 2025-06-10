@@ -202,6 +202,7 @@ const getPopoverCoordinate = function (props: {
   popoverRect: { width: number, height: number };
 }) {
   const placement = props.placement || defaultOptions.placement;
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 滚动条高度
   const map: { [x: string]: { top: number; left: number } } = {
     "top": {
       top: props.childRect.top - props.popoverRect.height,
@@ -252,7 +253,10 @@ const getPopoverCoordinate = function (props: {
       left: props.childRect.left - props.popoverRect.width,
     },
   }
-  return map[placement];
+  return {
+    top: map[placement].top + scrollTop, // 要加上滚动条高度
+    left: map[placement].left,
+  };
 }
 
 /**
