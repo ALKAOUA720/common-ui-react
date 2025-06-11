@@ -18,7 +18,7 @@ const Guide: React.FC<{
   componentName: string;
 }> = ({ componentTitle, componentName }) => {
   const ref = useRef(null);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   return (
     <div className={css.block} ref={ref}>
       <div className={css.title}>
@@ -889,6 +889,7 @@ const DrawerGuide: React.FC<{}> = () => {
 };
 
 const ListGuide: React.FC<{}> = () => {
+  const [showModal, setShowModal] = useState(false);
   const [heroInfoList, setHeroInfoList] = useState<HeroInfoT[]>([]); // 英雄信息列表
   const [hasMore, setHasMore] = useState(true); // 是否还有更多
   let startIndex = 0; // 当前请求列表的起始索引
@@ -914,21 +915,41 @@ const ListGuide: React.FC<{}> = () => {
   };
   return (
     <>
-      <List
-        hasMore={hasMore}
-        onNearBottom={() => {
-          addDataToHeroInfoList();
-        }}
-        onHeaderReleased={() => {
-          initHeroInfoList();
+      <div
+        className={classNames(css.button, "button")}
+        onClick={() => {
+          setShowModal(true);
         }}
       >
-        {heroInfoList.map((item, index) => (
-          <List.Item key={index}>
-            <HeroInfo info={item} />
-          </List.Item>
-        ))}
-      </List>
+        打开列表
+      </div>
+      <Modal
+        visible={showModal}
+        title="List列表"
+        footer={null}
+        onCancel={() => {
+          setShowModal(false);
+        }}
+        onClose={() => {
+          setShowModal(false);
+        }}
+      >
+        <List
+          hasMore={hasMore}
+          onNearBottom={() => {
+            addDataToHeroInfoList();
+          }}
+          onHeaderReleased={() => {
+            initHeroInfoList();
+          }}
+        >
+          {heroInfoList.map((item, index) => (
+            <List.Item key={index}>
+              <HeroInfo info={item} />
+            </List.Item>
+          ))}
+        </List>
+      </Modal>
     </>
   );
 };

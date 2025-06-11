@@ -55,6 +55,8 @@ const List: React.FC<ListPropsT> & {
         const scrollTop = overflowBoxDom.scrollTop;
         const clientHeight = overflowBoxDom.clientHeight;
         const isNeerBottom = scrollHeight - scrollTop - clientHeight <= scrollThreshold;
+        console.log(scrollTop);
+
         if (scrollTop <= -50) {
           // if (scrollTop === 0) {
           console.log('触顶啦');
