@@ -21,4 +21,5 @@ export default defineConfig({
   npmClient: "pnpm",
   title: "Common UI - React",
   publicPath: process.env.NODE_ENV !== "production" ? "/" : "./",
+  outputPath: "docs",
 });
